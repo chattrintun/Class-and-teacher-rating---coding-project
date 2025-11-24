@@ -1,10 +1,11 @@
-compile: ll_main.cpp 
-	 g++  ll_main.cpp -o ll
+DEPS = test
 
+compile: main.cpp
+		clear
+	 	g++ main.cpp -o $(DEPS)
 
-run: ll
-	 ./ll
+run: $(DEPS)
+	 ./$(DEPS) $(var)
 
-
-clean: ll
-	 rm ll
+clean: $(DEPS)
+	 rm $(DEPS)

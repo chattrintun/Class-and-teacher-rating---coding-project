@@ -1,43 +1,33 @@
+#ifndef NODE_H
+#define NODE_H
+#include "rating.h"
 
-#include <iomanip>
-class Node {
+class node {
 private:
   Rating data;
-  Node *nextPtr;
- // *nextPtr is next; 
- // Rating_data holds the rating information
-
+  node *next;
 public:
- 
-
-
-
+  node(const Rating &r);;
+  void set_next(node*);
+  node *get_next();
+  ~node();
+   
 };
-/*
-typedef Node *NodePtr; // synonym for Node*
 
-Node::Node(int x) {
-  value = x;
-  nextPtr = NULL;
+node::node(const Rating &r){
   
+  next=NULL;
 }
 
-Node::~Node() { cout << value << " deleted" << endl; }
-
-NodePtr Node::get_next() { return nextPtr; }
-
-int Node::get_data() { return value; }
-
-          previousPtr->set_next(newPtr);
-         newPtr->set_next(currentPtr);
-
-void Node::set_next(NodePtr t) {
-       this->nextPtr = t; 
-   or use set next to set previous too
-      
+void node::set_next(node *n){
+  next = n;
 }
 
-void Node::print(){
-  cout << setw(3) << value;
+node* node::get_next(){
+  return next;
 }
-*/
+
+ node::~node(){
+     cout<<"delete "<<endl;
+}
+#endif
