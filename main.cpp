@@ -25,8 +25,9 @@ int main(int argc, char **argv) {
         switch(choice) {
             case 1: list.addRating(); break;
             
-            /*
+            
             case 2: list.displayAll(); break;
+            /*
             case 3: {
                 string name; cin >> name;
                 list.searchByTeacher(name);
@@ -43,11 +44,12 @@ int main(int argc, char **argv) {
                 int id; cin >> id;
                 list.deleteByID(id);
             } break;
+             */
             case 7:
                 //saveToFile(list);
                 cout << "Goodbye!"<<endl;
                 return 0;
-                */
+                
         }
                 
     } while (true);

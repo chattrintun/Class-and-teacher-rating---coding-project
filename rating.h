@@ -1,7 +1,12 @@
 #include "node.h"
 #include <string>
+#include <iostream>
 #ifndef RATING_H
 #define RATING_H
+
+using std::string;
+using std::cout;
+using std::endl;
 
 class Rating {
 private:
@@ -13,8 +18,7 @@ private:
   int studentID;
 
 public:
-  void printRating();
-
+    void printRating();
     // set id to something
     void setID(int v) { id = v; }
     void setClassName(const string &v) { className = v; }
@@ -22,7 +26,6 @@ public:
     void setScore(int v) { score = v; }
     void setComment(const string &v) { comment = v; }
     void setStudentID(int v) { studentID = v; }
-
 
     //get id value
     int getID() const { return id; }
@@ -37,8 +40,9 @@ void Rating :: printRating() {
     cout << "ID: " << id << endl;
     cout << "Class: " << className << endl;
     cout << "Teacher: " << teacherName << endl;
-    cout << "Score: " << score << endl;
+    cout << "Score: (" << score << "/5)"<< endl;
     cout << "Comment: " << comment << endl;
-    cout << "Student ID: " << studentID << endl;
+    //cout << "Student ID: " << studentID << endl;
 }
+
 #endif

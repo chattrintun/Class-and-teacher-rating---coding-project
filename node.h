@@ -1,13 +1,17 @@
 #ifndef NODE_H
 #define NODE_H
 #include "rating.h"
+#include <iostream>
+
+using std::cout;
 
 class node {
 private:
   Rating data;
   node *next;
 public:
-  node(const Rating &r);;
+  node(const Rating &r);
+  const Rating& getData() const;
   void set_next(node*);
   node *get_next();
   ~node();
@@ -15,8 +19,12 @@ public:
 };
 
 node::node(const Rating &r){
-  
-  next=NULL;
+  data = r;
+  next = NULL;
+}
+
+const Rating& node::getData() const{
+  return data;
 }
 
 void node::set_next(node *n){
@@ -28,6 +36,6 @@ node* node::get_next(){
 }
 
  node::~node(){
-     cout<<"delete "<<endl;
+   cout<<"delete "<<endl;
 }
 #endif
