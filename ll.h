@@ -388,4 +388,57 @@ void ll::updateByID(int id) {
         cout << "[!] ID " << id << " not found." << endl;
     }
 }
+
+void ll::searchByTeacher(string teacherName){
+    node* temp = head;
+    
+    if(head==nullptr){
+        cout<<"Rating list is empty"<<endl;
+        return;
+    }
+
+    
+    while(temp != NULL){
+        
+        if(temp->getData().getTeacherName() == teacherName){
+            temp->getData().printRating();
+            cout<<endl;
+            
+        }
+        if(temp->get_next() != NULL){
+            temp = temp->get_next();
+        }
+        else{
+            break;
+        }
+        
+    }
+
+}
+
+void ll::searchByClass(string className){
+    node* temp = head;
+    
+
+    if(head==nullptr){
+        cout<<"Rating list is empty"<<endl;
+        return;
+    }
+    
+    while(temp != NULL){
+        if(temp->getData().getClassName() == className){
+            temp->getData().printRating();
+            cout<<endl;
+        }
+        if(temp->get_next() != NULL){
+            temp = temp->get_next();
+        }
+        else{
+            break;
+        }
+        
+    }
+
+}
+
 #endif

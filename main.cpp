@@ -33,16 +33,21 @@ int main(int argc, char **argv) {
             
             
             case 2: list.displayAll(); break;
-            /*
+            
             case 3: {
-                string name; cin >> name;
+                string name;
+                cout<<"Name of the teacher to search: ";
+                 cin >> name;
                 list.searchByTeacher(name);
             } break;
+            
             case 4: {
-                string name; cin >> name;
+                string name; 
+                cout<<"Name of the Class to search: ";
+                cin >> name;
                 list.searchByClass(name);
             } break;
-             */
+             
             case 5: { // UPDATE
                 // Show list first so user can find the ID
                 cout << "\n--- LIST OF RATINGS ---" << endl;
