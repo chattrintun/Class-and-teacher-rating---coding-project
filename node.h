@@ -12,6 +12,7 @@ private:
 public:
   node(const Rating &r);
   const Rating& getData() const;
+  Rating& getData();
   void set_next(node*);
   node *get_next();
   ~node();
@@ -24,6 +25,10 @@ node::node(const Rating &r){
 }
 
 const Rating& node::getData() const{
+  return data;
+}
+
+Rating& node::getData(){
   return data;
 }
 

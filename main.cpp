@@ -1,14 +1,20 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 #include "ll.h"
 #include "node.h"
 #include "rating.h"
 #include "ll.cpp"
+#include <iomanip>
+
 
 
 int main(int argc, char **argv) {
     ll list;
-    //loadFromFile(list); // not done
+    loadFromFile(list, "ratings.csv");
+    //sky +1 for effort
+    //wad kao eitoo kwang ped 
+    
     int choice;
 
     do {
@@ -36,17 +42,34 @@ int main(int argc, char **argv) {
                 string name; cin >> name;
                 list.searchByClass(name);
             } break;
-            case 5: {
-                int id; cin >> id;
+             */
+            case 5: { // UPDATE
+                // Show list first so user can find the ID
+                cout << "\n--- LIST OF RATINGS ---" << endl;
+                list.displayAll(); 
+                
+                int id; 
+                cout << "Enter Rating ID to Update (from list above): ";
+                cin >> id;
                 list.updateByID(id);
             } break;
-            case 6: {
-                int id; cin >> id;
+
+            case 6: { // DELETE
+            // Show all ratings first so user can pick an ID
+                cout << "\n--- SELECT RATING TO DELETE ---" << endl;
+                list.displayAll();
+
+            // Ask for ID
+                int id; 
+                cout << "Enter Rating ID to Delete: ";
+                cin >> id;
+
+            // Call the smart delete function
                 list.deleteByID(id);
             } break;
-             */
-            case 7:
-                //saveToFile(list);
+             
+            case 7: // save and exit
+                saveToFile(list, "ratings.csv");
                 cout << "Goodbye!"<<endl;
                 return 0;
                 
