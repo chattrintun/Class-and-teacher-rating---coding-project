@@ -2,20 +2,25 @@
 #define NODE_H
 #include "rating.h"
 #include <iostream>
-
-using std::cout;
+using namespace std;
 
 class node {
 private:
   Rating data;
+  int studentID; 
   node *next;
 public:
   node(const Rating &r);
-  const Rating& getData() const;
+  //node(int id); // constructor for queue (stores student ID only)
+   Rating& getData() { return data; }
+   const Rating& getData() const { return data; }
   void set_next(node*);
   node *get_next();
   ~node();
    
+  int getStudentID() const { return studentID; }
+  void setStudentID(int id) { studentID = id; }
+ node(int studentID); 
 };
 
 node::node(const Rating &r){
@@ -23,9 +28,10 @@ node::node(const Rating &r){
   next = NULL;
 }
 
-const Rating& node::getData() const{
-  return data;
-}
+ node::node(int studentID) { 
+        this->studentID = studentID;
+        next = nullptr; 
+    }
 
 void node::set_next(node *n){
   next = n;
@@ -38,4 +44,5 @@ node* node::get_next(){
  node::~node(){
    cout<<"delete "<<endl;
 }
+                
 #endif

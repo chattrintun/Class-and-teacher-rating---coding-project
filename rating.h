@@ -1,4 +1,5 @@
 #include "node.h"
+#include "Queue.h"
 #include <string>
 #include <iostream>
 #ifndef RATING_H
@@ -7,6 +8,9 @@
 using std::string;
 using std::cout;
 using std::endl;
+
+// Forward declaration to avoid circular dependency
+class Queue;
 
 class Rating {
 private:
@@ -34,6 +38,11 @@ public:
     int getScore() const { return score; }
     string getComment() const { return comment; }
     int getStudentID() const { return studentID; }
+
+    // Forward declaration - Queue is implemented in Queue.h
+    Queue* enrolled = NULL;
+    Queue* waitList = NULL; // queue of student IDs for this class
+    int maxClassSize() { return CLASSSIZE; } // maximum class size
 };
 
 void Rating :: printRating() {
@@ -46,3 +55,6 @@ void Rating :: printRating() {
 }
 
 #endif
+
+// Include Queue.h after Rating definition to avoid circular dependency
+#include "Queue.h"
