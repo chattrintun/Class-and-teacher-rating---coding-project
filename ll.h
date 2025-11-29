@@ -25,9 +25,14 @@ public:
   void searchByClass(string className); // Same but by class
   void updateByID(int id); // Modify data
   void deleteByID(int id); // Delete from list
+  //void displayClasslist(string className); // Display all ratings for a class
+  //string getClassByIndex(int idx); // Get class name by index
 
   float averageTeacher(string teacherName); //Statistics
   float averageClass(string className); // Statistics
+
+  void enroll(int); // Enrollment function
+  voiid drop(int studentID, string className); // Drop function
 
   node* getHead(); // needed by filemanager
 };
@@ -137,6 +142,82 @@ void ll::displayAll(){
   cin.get();
 }
 
+void ll::displayClassList() {
+    node *curr = head;
+    int index = 1;
 
+    while (curr != nullptr) {
+        cout << index << ". " << curr->getClassName() << endl;
+        curr = curr->get_next();
+        index++;
+    }
+}
 
+void ll::enroll(int studentID) {
+    cout << "--- ENROLL STUDENT ---"<< endl;
+    displayClassList();
+
+    cout << "Select class number: ";
+    int choice;
+    cin >> choice;
+
+    node* curr = head;
+    int index = 1;
+    while (curr && index < choice) {
+        curr = curr->get_next();
+        index++;
+    }
+
+    if (curr==NULL) {
+        cout << "Invalid class." << endl;
+        return;
+    }
+
+    Rating& r = curr->getData();
+
+    if (!r.waitList.ClassIsFull()) {
+        r.waitList.enqueue(studentID);
+        cout << "Student ID " << studentID << " enrolled successfully." << endl;
+    } else {
+        r.waitList.enqueue(studentID);
+        cout << "Class is full. Student ID " << studentID << " added to waiting list." << endl;
+    }
+
+    void ll::drop(int studentID) {
+         if (!head) {
+        cout << "No classes available." << endl;
+        return;
+    }
+
+    // display all classes
+    cout << "Available classes:" << endl;
+    node* curr = head;
+    int index = 1;
+    while (curr) {
+        cout << index << ". " << curr->getData().getClassName() << endl;
+        curr = curr->get_next();
+        index++;
+    }
+
+    // ask student which class to drop
+    cout << "Select class number to drop from: ";
+    int choice;
+    cin >> choice;
+
+    curr = head;
+    index = 1;
+    while (curr && index < choice) {
+        curr = curr->get_next();
+        index++;
+    }
+
+    if (!curr) { 
+        cout << "Invalid class selection." << endl;
+        return;
+    }
+
+    Rating& r = curr->getData();
+    r.waitList.dropStudent();
+}
+}
 #endif
