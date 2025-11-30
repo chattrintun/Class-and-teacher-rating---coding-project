@@ -3,6 +3,7 @@
 
 #include "rating.h"
 #include "node.h"
+#include "Queue.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -27,11 +28,16 @@ public:
     void deleteByID(int id); // Delete from list
     float averageTeacher(string teacherName); //Statistics
     float averageClass(string className); // Statistics
+    void displayClasslist(string className); // Display all ratings for a class
 
     node* getHead() const; // needed by filemanager
   // for save file and load file
     void setHead(node* h) { head = h; }
     void setNextID(int n) { nextID = n; }
+
+     void displayClassList(); // Show available classes
+    void enroll(int); // Enrollment function
+     void drop(int studentID); // Drop function
 
 };
 
@@ -273,7 +279,112 @@ node* ll::getHead() const {
     return head;
 }
 
+void ll::displayClassList() {
+    if (!head) {
+        cout << "No classes available.\n";
+        return;
+    }
 
+    node* curr = head;
+    int index = 1;
+    cout << "Available classes: "<< endl;
+    while (curr) {
+        cout << index << ". " << curr->getData().getClassName() << endl;
+        curr = curr->get_next();
+        index++;
+    }
+}
+
+void ll::enroll(int studentID) {
+    if (!head) {
+        cout << "No classes available to enroll." << endl;
+        return;
+    }
+
+    displayClassList();
+
+    cout << "Select class number to enroll in: ";
+    int choice;
+    cin >> choice;
+
+    node* curr = head;
+    int index = 1;
+    while (curr && index < choice) {
+        curr = curr->get_next();
+        index++;
+    }
+
+    if (!curr) {
+        cout << "Invalid class selection. "<<endl;
+        return;
+    }
+
+    Rating& r = curr->getData();
+
+    // Initialize queues if not already done
+    if (!r.enrolled) r.enrolled = new Queue();
+    if (!r.waitList) r.waitList = new Queue();
+
+    if (!r.enrolled->ClassisFull()) {
+        r.enrolled->enqueue(studentID);
+        cout << "Student ID " << studentID << " enrolled successfully in " << r.getClassName() << "." << endl;
+    } else {
+        r.waitList->enqueue(studentID);
+        cout << "Class " << r.getClassName() << " is full. " << "Student ID " << studentID << " added to waiting list." << endl;
+    }
+}
+
+   void ll::drop(int studentID) {
+    if (!head) {
+        cout << "No classes available.\n";
+        return;
+    }
+
+    displayClassList();
+
+    cout << "Select class number to drop from: ";
+    int choice;
+    cin >> choice;
+
+    node* curr = head;
+    int index = 1;
+    while (curr && index < choice) {
+        curr = curr->get_next();
+        index++;
+    }
+
+    if (!curr) {
+        cout << "Invalid class selection.\n";
+        return;
+    }
+
+     Rating& r = curr->getData();
+
+    if (!r.enrolled) r.enrolled = new Queue();
+    if (!r.waitList) r.waitList = new Queue();
+
+    // Try to remove from enrolled first
+    if (r.enrolled->removeStudent(studentID)) {
+        cout << "Student ID " << studentID << " dropped from " << r.getClassName() << ".\n";
+
+        // If there’s anyone in waitlist, move first to enrolled
+        if (!r.waitList->isEmpty()) {
+            int nextID = r.waitList->dequeue();
+            r.enrolled->enqueue(nextID);
+            cout << "Student ID " << nextID << " from waiting list is now enrolled in " << r.getClassName() << ".\n";
+        }
+        return;
+    }
+
+    // If not enrolled, try removing from waitlist
+    if (r.waitList->removeStudent(studentID)) {
+        cout << "Student ID " << studentID << " removed from waiting list of " << r.getClassName() << ".\n";
+        return;
+    }
+
+    // Not found in either queue
+    cout << "Student ID " << studentID << " was not found in enrolled or waiting list of "<< r.getClassName() << ".\n";
+}
 
 
 //                                                                Delete and update DATA 
