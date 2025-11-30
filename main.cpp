@@ -1,11 +1,15 @@
 #include <iostream>
 #include <fstream>
+#define CLASSSIZE 30
 using namespace std;
 #include "ll.h"
 #include "node.h"
 #include "rating.h"
 #include "ll.cpp"
 #include <iomanip>
+#include "map"
+#include "Queue.h"
+#include "Queue.cpp"
 
 
 
@@ -26,6 +30,8 @@ int main(int argc, char **argv) {
         cout << "5. Update Rating"<<endl;
         cout << "6. Delete Rating"<<endl;
         cout << "7. Save & Exit"<<endl;
+        cout << "8. Enroll to Class" << endl;
+        cout << "9. Drop from Class" << endl;
         cin >> choice;
 
         switch(choice) {
@@ -77,6 +83,20 @@ int main(int argc, char **argv) {
                 saveToFile(list, "ratings.csv");
                 cout << "Goodbye!"<<endl;
                 return 0;
+            case 8: {
+    int stuID;
+    cout << "Enter your student ID: ";
+    cin >> stuID;
+    list.enroll(stuID);
+}
+break; 
+    case 9: {
+    int stuID;
+    cout << "Enter your student ID: ";
+    cin >> stuID;
+    list.drop(stuID);
+}
+break;
                 
         }
                 
