@@ -64,7 +64,8 @@ void ll::addRating() {
     string input;
     while (true) {
         cout << "Enter class name: ";
-        cin >> input;
+        cin.ignore();
+        getline(cin, input);
         if (!input.empty()) {
             r.setClassName(input);
             break;
@@ -73,7 +74,8 @@ void ll::addRating() {
     }
     while (true) {
         cout << "Enter teacher name: ";
-        cin >> input;
+        cin.ignore();
+        getline(cin, input);
         if (!input.empty()) {
             r.setTeacherName(input);
             break;
@@ -301,7 +303,7 @@ void ll::displayClassList() {
         index++;
     }
 }
-
+ //                                                            Enroll and drop
 void ll::enroll(int studentID) {
     if (!head) {
         cout << "No classes available to enroll." << endl;

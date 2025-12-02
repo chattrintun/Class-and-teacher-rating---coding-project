@@ -18,7 +18,10 @@ int main(int argc, char **argv) {
     loadFromFile(list, "ratings.csv");
     //sky +1 for effort
     //wad kao eitoo kwang ped 
-    
+    // left to fix, Analytics ( average rating of the same class).
+    //  same name, different id.
+    // enroll and drop data doesnt save.
+    // when edit like add or delete the ID can turn to be replicas. add size and make it global and make size = id
     int choice;
 
     do {
@@ -29,9 +32,9 @@ int main(int argc, char **argv) {
         cout << "4. Search by Class"<<endl;
         cout << "5. Update Rating"<<endl;
         cout << "6. Delete Rating"<<endl;
-        cout << "7. Save & Exit"<<endl;
-        cout << "8. Enroll to Class" << endl;
-        cout << "9. Drop from Class" << endl;
+        cout << "7. Enroll to Class" << endl;
+        cout << "8. Drop from Class" << endl;
+        cout << "9. Save & Exit"<<endl;
         cin >> choice;
 
         switch(choice) {
@@ -75,30 +78,28 @@ int main(int argc, char **argv) {
                 cout << "Enter Rating ID to Delete: ";
                 cin >> id;
 
-            // Call the smart delete function
+            // Call the  delete function
                 list.deleteByID(id);
             } break;
              
-            case 7: // save and exit
+            case 7: {
+                int stuID;
+                cout << "Enter your student ID: ";
+                cin >> stuID;
+                list.enroll(stuID);
+            } break; 
+
+                case 8: {
+                int stuID;
+                cout << "Enter your student ID: ";
+                cin >> stuID;
+                list.drop(stuID);
+
+            } break;
+                case 9: // save and exit
                 saveToFile(list, "ratings.csv");
                 cout << "Goodbye!"<<endl;
-                return 0;
-            case 8: {
-    int stuID;
-    cout << "Enter your student ID: ";
-    cin >> stuID;
-    list.enroll(stuID);
-}
-break; 
-    case 9: {
-    int stuID;
-    cout << "Enter your student ID: ";
-    cin >> stuID;
-    list.drop(stuID);
-}
-break;
-                
-        }
-                
+                return 0;            
+        }         
     } while (true);
 }
