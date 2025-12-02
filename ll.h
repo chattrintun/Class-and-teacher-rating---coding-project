@@ -229,21 +229,28 @@ void loadFromFile(ll &list, const string &filename) {
         return;
     }
 
-    // Step 1: clear current list
+    // Clear existing list
     node* current = list.getHead();
     while (current != nullptr) {
         node* nextNode = current->get_next();
         delete current;
         current = nextNode;
     }
-
-    list.setHead(nullptr);  // reset head
-    list.setNextID(1);      // will update after loading CSV
+    list.setHead(nullptr);
+    list.setNextID(1);
 
     string line;
     int maxID = 0;
 
+    auto safe_stoi = [&](const string& s) -> int {
+        if (s.empty()) return 0;
+        try { return stoi(s); }
+        catch (...) { return 0; }
+    };
+
     while (getline(file, line)) {
+        if (line.empty()) continue; // skip blank lines
+        
         stringstream ss(line);
 
         string s_id, className, teacherName, s_score, comment, s_studentID;
@@ -256,16 +263,16 @@ void loadFromFile(ll &list, const string &filename) {
         getline(ss, s_studentID, ',');
 
         Rating r;
-        r.setID(stoi(s_id));
+
+        r.setID(safe_stoi(s_id));
         r.setClassName(className);
         r.setTeacherName(teacherName);
-        r.setScore(stoi(s_score));
+        r.setScore(safe_stoi(s_score));
         r.setComment(comment);
-        r.setStudentID(stoi(s_studentID));
+        r.setStudentID(safe_stoi(s_studentID));
 
-        maxID = max(maxID, stoi(s_id));
+        maxID = max(maxID, safe_stoi(s_id));
 
-        // insert into list (head insert)
         node* newNode = new node(r);
         newNode->set_next(list.getHead());
         list.setHead(newNode);
